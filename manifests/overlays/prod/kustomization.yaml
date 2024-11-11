@@ -13,4 +13,4 @@ kind: Kustomization
 namePrefix: prod-
 images:
 - name: ce82263409acr.azurecr.io/todo
-  newTag: "202411021317"
+  newTag: "202411110856"
