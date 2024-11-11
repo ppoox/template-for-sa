@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: todo-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: app.ce-82263409-sa.kubepia.net
+    http:
+      paths:
+      - path: /
+        backend:
+          service:
+            name: todo
+            port:
+              number: 8080
+        pathType: Prefix

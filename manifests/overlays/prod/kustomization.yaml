@@ -1,0 +1,16 @@
+configMapGenerator:
+- files:
+  - application.yml
+  name: todo-configmap
+resources:
+- ../../base
+- pvc.yaml
+patchesStrategicMerge:
+- deployment.yaml
+- ingress.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namePrefix: prod-
+images:
+- name: ce82263409acr.azurecr.io/todo
+  newTag: "202411021317"

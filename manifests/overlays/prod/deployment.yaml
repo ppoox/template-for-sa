@@ -1,0 +1,44 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: todo
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: todo
+          command: ["java","-jar","/app.jar"]
+          args: ["--spring.config.location=file:/config/application.yml"]
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 5
+          volumeMounts:
+          - mountPath: /mnt/todo
+            name: todo-volume
+            readOnly: false
+            subPath: todo
+          - mountPath: /config
+            name: application-properties
+            readOnly: true
+                          
+      volumes:
+      - name: todo-volume
+        persistentVolumeClaim:
+          claimName: ce-82263409-sa-pvc
+      - name: application-properties
+        configMap:
+          name: todo-configmap
+          items:
+            - key: application.yml
+              path: application.yml
+          defaultMode: 420

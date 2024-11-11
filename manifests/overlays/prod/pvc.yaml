@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ce-82263409-sa-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ce-82263409-sa-sc
+  resources:
+    requests:
+      storage: 1Gi
